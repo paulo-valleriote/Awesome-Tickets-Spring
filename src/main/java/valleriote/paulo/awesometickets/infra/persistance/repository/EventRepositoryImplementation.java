@@ -7,8 +7,10 @@ import valleriote.paulo.awesometickets.domain.entity.Event;
 import valleriote.paulo.awesometickets.domain.repository.EventRepository;
 import valleriote.paulo.awesometickets.infra.persistance.jpa.EventJpaRepository;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Repository
 public class EventRepositoryImplementation implements EventRepository {
@@ -19,8 +21,8 @@ public class EventRepositoryImplementation implements EventRepository {
     }
 
     @Override
-    public List<Event> find() {
-        return repository.findAll();
+    public Set<Event> find() {
+        return new HashSet<>(repository.findAll());
     }
 
     @Override

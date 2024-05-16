@@ -5,8 +5,10 @@ import valleriote.paulo.awesometickets.domain.entity.User;
 import valleriote.paulo.awesometickets.domain.repository.UserRepository;
 import valleriote.paulo.awesometickets.infra.persistance.jpa.UserJpaRepository;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Repository
 public class UserRepositoryImplementation implements UserRepository {
@@ -17,8 +19,8 @@ public class UserRepositoryImplementation implements UserRepository {
     }
 
     @Override
-    public List<User> find() {
-        return repository.findAll();
+    public Set<User> find() {
+        return new HashSet<>(repository.findAll());
     }
 
     @Override
