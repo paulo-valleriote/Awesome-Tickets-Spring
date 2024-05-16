@@ -10,7 +10,7 @@ import valleriote.paulo.awesometickets.app.handler.exceptions.MethodNotImplement
 
 import java.time.LocalDateTime;
 import java.util.Collection;
-import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table
@@ -27,6 +27,9 @@ public class User implements UserDetails {
     private String password;
 
     private boolean enabled;
+
+    @OneToMany(mappedBy = "user")
+    private Set<Registration> registrations;
 
     @CreatedDate
     @Setter(AccessLevel.NONE)

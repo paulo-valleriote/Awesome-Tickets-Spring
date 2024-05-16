@@ -6,7 +6,6 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
-import java.util.Set;
 
 @Entity
 @Table
@@ -14,19 +13,20 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
-public class Event {
+public class Registration {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
 
-    private String name;
-    private LocalDateTime date;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
-    @OneToMany(mappedBy = "event")
-    private Set<Registration> registrations;
+    @ManyToOne
+    @JoinColumn(name = "event_id")
+    Event event;
 
     @CreatedDate
     @Setter(AccessLevel.NONE)
     private LocalDateTime createdAt;
-
 }
