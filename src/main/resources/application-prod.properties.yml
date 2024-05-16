@@ -1,0 +1,10 @@
+environment:
+  name: PROD
+spring:
+  datasource:
+    url: jbdc:postgresql://localhost:5432/awesometickets
+    username: root
+    password: admin
+    driverClassName: org.postgresql.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQL81Dialect
