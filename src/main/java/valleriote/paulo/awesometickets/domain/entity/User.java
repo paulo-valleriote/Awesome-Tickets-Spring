@@ -1,59 +1,80 @@
 package valleriote.paulo.awesometickets.domain.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import jakarta.persistence.*;
+import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import valleriote.paulo.awesometickets.app.handler.exceptions.MethodNotImplemented;
 
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
 
 @Entity
+@Table
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@EntityListeners(AuditingEntityListener.class)
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
 
+    private String username;
+    private String password;
+
+    private boolean enabled;
+
+    @CreatedDate
+    @Setter(AccessLevel.NONE)
+    private LocalDateTime createdAt;
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of();
+        throw new MethodNotImplemented();
     }
 
     @Override
     public String getPassword() {
-        return "";
+        return password;
     }
 
     @Override
     public String getUsername() {
-        return "";
+        return username;
     }
 
     @Override
     public boolean isAccountNonExpired() {
-        return false;
+        throw new MethodNotImplemented();
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return false;
+        throw new MethodNotImplemented();
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return false;
+        throw new MethodNotImplemented();
     }
 
     @Override
     public boolean isEnabled() {
-        return false;
+        return enabled;
+    }
+
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id='" + id + '\'' +
+                ", username='" + username + '\'' +
+                ", enabled=" + enabled +
+                ", createdAt=" + createdAt +
+                '}';
     }
 }
