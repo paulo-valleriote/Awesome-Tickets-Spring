@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class MailServiceImpl implements MailService {
     @Value("${spring.mail.username}")
-    private final String fromUserMail = "john@doe.com";
+    private final String from = "john@doe.com";
 
     private final JavaMailSender mailSender;
 
@@ -17,7 +17,7 @@ public class MailServiceImpl implements MailService {
     }
 
     @Override
-    public void sendMessage(MailMessage mailMessage) {
+    public void sendMail(MailMessage mailMessage) {
         mailSender.send(
                 buildMessage(mailMessage)
         );
@@ -25,7 +25,7 @@ public class MailServiceImpl implements MailService {
 
     private SimpleMailMessage buildMessage(MailMessage message) {
         SimpleMailMessage mailMessage = new SimpleMailMessage();
-        mailMessage.setFrom(fromUserMail);
+        mailMessage.setFrom(from);
         mailMessage.setTo(message.to());
         mailMessage.setSubject(message.subject());
         mailMessage.setText(message.content());

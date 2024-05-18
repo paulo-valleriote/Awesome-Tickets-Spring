@@ -1,37 +1,46 @@
 package valleriote.paulo.awesometickets.app.config;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 
 import java.util.Properties;
 
-public class SpringMailConfig {
-    @Value("${spring.mail.username}")
-    private final String smtpUsername = "john@doe.com";
-    @Value("${spring.mail.placeholder}")
-    private final String smtpPassword = "johndoe";
+@Configuration
+@ConfigurationProperties
+public class JavaMailConfig {
     @Value("${spring.mail.host}")
-    private final String smtpHost = "smtp.example.com";
+    private String host;
+
+    @Value("${spring.mail.user}")
+    private String user;
+
+    @Value("${spring.mail.password}")
+    private String password;
+
+    @Value("${spring.mail.debug}")
+    private Boolean debug;
+
     @Value("${spring.mail.port}")
-    private final Integer smtpPort = 0;
+    private Integer port;
 
     @Bean
     public JavaMailSender getJavaMailSender() {
         JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
-        mailSender.setHost(smtpHost);
-        mailSender.setPort(smtpPort);
+        mailSender.setHost(host);
+        mailSender.setPort(port);
 
-        mailSender.setUsername(smtpUsername);
-        mailSender.setPassword(smtpPassword);
+        mailSender.setUsername(user);
+        mailSender.setPassword(password);
 
         Properties props = mailSender.getJavaMailProperties();
         props.put("mail.transport.protocol", "smtp");
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.starttls.enable", "true");
-        props.put("mail.debug", "true");
-
+        props.put("mail.debug", debug);
         return mailSender;
     }
 }

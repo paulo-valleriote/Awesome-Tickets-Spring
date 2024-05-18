@@ -12,6 +12,7 @@ spring:
     port: 587
     username: any@mail.com
     password: any
+    debug: true
     properties:
       mail:
         smtp:
