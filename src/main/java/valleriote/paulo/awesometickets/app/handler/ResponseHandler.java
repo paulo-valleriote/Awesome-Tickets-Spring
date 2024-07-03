@@ -11,8 +11,8 @@ public class ResponseHandler {
         return new ResponseEntity<>(newResponse, newResponse.status());
     }
 
-    public static ResponseEntity<ResponseDTO> generateErrorResponse(ApiError error) {
-        ResponseDTO newResponse = new ResponseDTO(error.getMessage(), error.getStatus(), error.getDebugMessage());
+    public static ResponseEntity<ResponseDTO> generateErrorResponse(HttpStatus status, String message,  Throwable data) {
+        ResponseDTO newResponse = new ResponseDTO(null, status, new ApiError(status, message, data));
         return new ResponseEntity<>(newResponse, newResponse.status());
     }
 }
