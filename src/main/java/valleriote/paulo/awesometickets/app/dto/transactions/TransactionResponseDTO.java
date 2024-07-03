@@ -1,13 +1,15 @@
-package valleriote.paulo.awesometickets.app.dto.user;
+package valleriote.paulo.awesometickets.app.dto.transactions;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import valleriote.paulo.awesometickets.app.config.formatter.date.DateJsonSerializer;
+import valleriote.paulo.awesometickets.domain.entity.enums.TransactionStatus;
 
 import java.time.LocalDateTime;
 
-public record UserResponseDTO(
+public record TransactionResponseDTO(
         String id,
-        String username,
+        TransactionStatus status,
+        String userId,
         @JsonSerialize(using = DateJsonSerializer.class) LocalDateTime createdAt
 ) {
 }
