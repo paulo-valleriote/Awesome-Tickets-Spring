@@ -2,12 +2,12 @@ package valleriote.paulo.awesometickets.app.handler.exceptions.user;
 
 import java.util.NoSuchElementException;
 
-public class UserNotFound extends NoSuchElementException {
-    public UserNotFound() {
+public class UserNotFoundException extends NoSuchElementException {
+    public UserNotFoundException() {
         super("None user can be found");
     }
 
-    public UserNotFound(String message) {
+    public UserNotFoundException(String message) {
         super(message);
     }
 }
