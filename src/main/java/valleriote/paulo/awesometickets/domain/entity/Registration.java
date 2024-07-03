@@ -4,11 +4,12 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import valleriote.paulo.awesometickets.domain.entity.enums.RegistrationStatus;
 
 import java.time.LocalDateTime;
 
 @Entity
-@Table
+@Table(name = "registrations")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -24,7 +25,10 @@ public class Registration {
 
     @ManyToOne
     @JoinColumn(name = "event_id")
-    Event event;
+    private Event event;
+
+    @Enumerated(EnumType.STRING)
+    private RegistrationStatus status;
 
     @CreatedDate
     @Setter(AccessLevel.NONE)

@@ -12,18 +12,21 @@ import java.time.LocalDateTime;
 import java.util.Set;
 
 @Entity
-@Table
+@Table(name = "events")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
-public class Event implements Serializable {
+public class Event {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
 
     private String name;
     private LocalDateTime date;
+
+    @Enumerated(EnumType.STRING)
+    private EventStatus status;
 
     @OneToMany(mappedBy = "event")
     private Set<Registration> registrations;

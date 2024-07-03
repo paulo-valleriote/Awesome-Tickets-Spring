@@ -6,6 +6,7 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import valleriote.paulo.awesometickets.app.dto.user.UserResponseDTO;
 import valleriote.paulo.awesometickets.app.handler.exceptions.MethodNotImplemented;
 
 import java.time.LocalDateTime;
@@ -13,7 +14,7 @@ import java.util.Collection;
 import java.util.Set;
 
 @Entity
-@Table
+@Table(name = "users")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -70,6 +71,14 @@ public class User implements UserDetails {
         return enabled;
     }
 
+    public User(String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
+
+    public UserResponseDTO toDTO() {
+        return new UserResponseDTO(id, username, createdAt);
+    }
 
     @Override
     public String toString() {
