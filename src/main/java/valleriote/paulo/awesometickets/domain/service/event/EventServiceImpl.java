@@ -5,7 +5,7 @@ import valleriote.paulo.awesometickets.app.dto.event.EventResponseDTO;
 import valleriote.paulo.awesometickets.domain.utils.AppObjectMapper;
 import valleriote.paulo.awesometickets.app.dto.event.EventCreateDTO;
 import valleriote.paulo.awesometickets.app.dto.event.EventUpdateDTO;
-import valleriote.paulo.awesometickets.app.handler.exceptions.event.EventNotFound;
+import valleriote.paulo.awesometickets.app.handler.exceptions.event.EventNotFoundException;
 import valleriote.paulo.awesometickets.domain.entity.Event;
 import valleriote.paulo.awesometickets.domain.repository.EventRepository;
 
@@ -42,7 +42,7 @@ public class EventServiceImpl implements EventService {
 
     @Override
     public void update(String id, EventUpdateDTO dto) {
-        Event event = eventRepository.findById(id).orElseThrow(EventNotFound::new);
+        Event event = eventRepository.findById(id).orElseThrow(EventNotFoundException::new);
         mapper.updateEvent(event, dto);
         eventRepository.save(event);
     }

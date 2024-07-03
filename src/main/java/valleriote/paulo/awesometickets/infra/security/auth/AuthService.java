@@ -4,7 +4,7 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
-import valleriote.paulo.awesometickets.app.handler.exceptions.user.UserNotFound;
+import valleriote.paulo.awesometickets.app.handler.exceptions.user.UserNotFoundException;
 import valleriote.paulo.awesometickets.domain.entity.User;
 import valleriote.paulo.awesometickets.domain.repository.UserRepository;
 import valleriote.paulo.awesometickets.infra.persistance.repository.UserRepositoryImplementation;
@@ -21,11 +21,11 @@ public class AuthService implements UserDetailsService {
     }
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UserNotFound {
+    public UserDetails loadUserByUsername(String username) throws UserNotFoundException {
         Optional<User> user = userRepository.findByUsername(username);
 
         if (user.isEmpty()) {
-            throw new UserNotFound();
+            throw new UserNotFoundException();
         }
 
         return user.get();
