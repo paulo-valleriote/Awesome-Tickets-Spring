@@ -4,7 +4,10 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import valleriote.paulo.awesometickets.app.dto.event.EventCreateDTO;
+import valleriote.paulo.awesometickets.app.dto.event.EventResponseDTO;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Set;
 
@@ -14,7 +17,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
-public class Event {
+public class Event implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
@@ -29,4 +32,13 @@ public class Event {
     @Setter(AccessLevel.NONE)
     private LocalDateTime createdAt;
 
+
+    public Event(EventCreateDTO dto) {
+        this.name = dto.name();
+        this.date = dto.date();
+    }
+
+    public EventResponseDTO toDTO() {
+        return new EventResponseDTO(id, name, date, createdAt);
+    }
 }
