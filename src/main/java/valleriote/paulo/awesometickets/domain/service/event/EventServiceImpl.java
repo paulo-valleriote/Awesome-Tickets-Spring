@@ -26,7 +26,6 @@ public class EventServiceImpl implements EventService {
     public EventResponseDTO findById(String id) {
         Optional<Event> event = eventRepository.findById(id);
         return event.map(Event::toDTO).orElse(null);
-
     }
 
     @Override
