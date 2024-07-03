@@ -1,21 +1,27 @@
 package valleriote.paulo.awesometickets.app.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.env.Environment;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 
 import java.util.Properties;
 
 @Configuration
-@ConfigurationProperties
+
 public class JavaMailConfig {
+    @Autowired
+    Environment env;
+
     @Value("${spring.mail.host}")
     private String host;
 
-    @Value("${spring.mail.user}")
+    @Value("${spring.mail.username}")
     private String user;
 
     @Value("${spring.mail.password}")
