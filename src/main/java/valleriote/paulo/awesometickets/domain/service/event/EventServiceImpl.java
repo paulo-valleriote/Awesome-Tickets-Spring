@@ -2,6 +2,8 @@ package valleriote.paulo.awesometickets.domain.service.event;
 
 import org.springframework.stereotype.Service;
 import valleriote.paulo.awesometickets.app.dto.event.EventResponseDTO;
+import valleriote.paulo.awesometickets.app.handler.exceptions.event.EventAlreadyDoneException;
+import valleriote.paulo.awesometickets.domain.entity.EventStatus;
 import valleriote.paulo.awesometickets.domain.utils.AppObjectMapper;
 import valleriote.paulo.awesometickets.app.dto.event.EventCreateDTO;
 import valleriote.paulo.awesometickets.app.dto.event.EventUpdateDTO;
@@ -24,31 +26,45 @@ public class EventServiceImpl implements EventService {
 
     @Override
     public EventResponseDTO findById(String id) {
-        Optional<Event> event = eventRepository.findById(id);
+        Optional<Event> event = this.eventRepository.findById(id);
         return event.map(Event::toDTO).orElse(null);
     }
 
     @Override
     public List<EventResponseDTO> list() {
-        return eventRepository.find().stream().map(Event::toDTO).toList();
+        return this.eventRepository.findAll().stream().map(Event::toDTO).toList();
     }
 
     @Override
     public EventResponseDTO create(EventCreateDTO dto) {
         Event newEvent = new Event(dto);
-        eventRepository.save(newEvent);
+        newEvent.setStatus(EventStatus.CREATED);
+
+        this.eventRepository.save(newEvent);
         return newEvent.toDTO();
     }
 
     @Override
     public void update(String id, EventUpdateDTO dto) {
-        Event event = eventRepository.findById(id).orElseThrow(EventNotFoundException::new);
+        Event event = this.eventRepository.findById(id).orElseThrow(EventNotFoundException::new);
+
+        if (event.getStatus() == EventStatus.DONE) {
+            throw new EventAlreadyDoneException();
+        }
+
         mapper.updateEvent(event, dto);
-        eventRepository.save(event);
+        this.eventRepository.save(event);
     }
 
     @Override
     public void delete(String id) {
-        eventRepository.delete(id);
+        Event event = this.eventRepository.findById(id).orElseThrow(EventNotFoundException::new);
+
+        if (event.getStatus() == EventStatus.DONE) {
+            throw new EventAlreadyDoneException();
+        }
+
+        event.setStatus(EventStatus.CANCELLED);
+        this.eventRepository.save(event);
     }
 }

@@ -1,4 +1,4 @@
-package valleriote.paulo.awesometickets.domain.service.payment;
+package valleriote.paulo.awesometickets.domain.service.transaction;
 
 import valleriote.paulo.awesometickets.app.dto.transactions.CreateTransactionDTO;
 import valleriote.paulo.awesometickets.app.dto.transactions.TransactionOperationDTO;
