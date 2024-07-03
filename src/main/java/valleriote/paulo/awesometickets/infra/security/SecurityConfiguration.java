@@ -27,9 +27,9 @@ public class SecurityConfiguration {
     private final AuthService authService;
     private final HandlerExceptionResolver exceptionResolver;
 
-    public SecurityConfiguration(AuthService authService, HandlerExceptionResolver exceptionResolver) {
+    public SecurityConfiguration(AuthService authService, HandlerExceptionResolver handlerExceptionResolver) {
         this.authService = authService;
-        this.exceptionResolver = exceptionResolver;
+        this.exceptionResolver = handlerExceptionResolver;
     }
 
     @Bean
@@ -44,7 +44,7 @@ public class SecurityConfiguration {
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/v1/auth/**").permitAll()
-                        .anyRequest().authenticated()
+                        .anyRequest().permitAll()
                 )
                 .authenticationManager(authenticationManager)
                 .addFilterBefore(jwtAuthFilter(), UsernamePasswordAuthenticationFilter.class)
